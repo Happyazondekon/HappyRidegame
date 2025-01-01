@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Ride</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Zone d'attente avant de commencer le jeu -->
+  <div id="start-screen">
+    <button id="start-btn">Démarrer le jeu</button>
+  </div>
+
+  <!-- Zone du jeu, cachée initialement -->
+  <div id="game-container" style="display: none;">
+    <div id="road">
+      <img src="https://i.postimg.cc/phNSDpKc/road-png-9578.png" alt="Road" id="road-image">
+      <div class="player-car">
+        <img src="https://i.postimg.cc/w1jYvykh/car.png" alt="Player Car">
+      </div>
+      <div class="enemy-car">
+        <img src="https://i.postimg.cc/BjVknhb0/vecteezy-car-cartoon-porsche-3d-render-png-20000361.png" alt="Enemy Car">
+      </div>
+    </div>
+    <div id="current-score">Score : 0</div>
+  </div>
+
+  <!-- Section des boutons -->
+  <div id="controls" class="controls-bar">
+    <button id="pause-btn">Pause</button>
+    <button id="new-game-btn">Nouvelle Partie</button>
+  </div>
+
+  <!-- Popup Game Over -->
+  <div id="game-over-popup">
+    <p>Game Over! Score final : <span id="final-score">0</span></p>
+    <button id="restart-btn">Recommencer</button>
+  </div>
+
+  <!-- Audio -->
+  <audio id="background-music" loop>
+    <source src="C:\Users\ELITEBOOK\Desktop\Happy Ride\titanium-170190.mp3" type="audio/mpeg">
+    Votre navigateur ne supporte pas la balise audio.
+  </audio>
+
+  <audio id="collision-sound">
+    <source src="" type="audio/mpeg">
+    Votre navigateur ne supporte pas la balise audio.
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
