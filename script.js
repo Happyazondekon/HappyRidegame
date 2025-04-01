@@ -411,42 +411,35 @@ function updatePowerUpTimer() {
 }
 
 // Combo system
+// Modifier la fonction updateCombo() comme ceci :
 function updateCombo() {
   const now = Date.now();
   
-  // If last dodge was within 1 second, increase streak
-  if (now - lastDodgeTime < 1000) {
+  if (now - lastDodgeTime < 1000) { // Si dodge dans la dernière seconde
     dodgeStreak++;
+    
+    // Seulement afficher le combo à partir de x3
+    if (dodgeStreak >= 3) {
+      combo = dodgeStreak - 2; // Combo x1 à partir de 3 dodges
+      comboCounter.textContent = `Combo: ${combo}x`;
+      comboCounter.style.display = 'block';
+      
+      // Bonus sonore et visuel pour les gros combos
+      if (combo >= 3 && soundToggle.checked) {
+        comboSound.currentTime = 0;
+        comboSound.play();
+      }
+      
+      // Bonus de points proportionnel au combo
+      addScore(combo); 
+    }
   } else {
-    dodgeStreak = 1;
+    dodgeStreak = 0;
+    combo = 0;
+    comboCounter.style.display = 'none';
   }
   
   lastDodgeTime = now;
-  
-  // Update combo display
-  if (dodgeStreak >= 3) {
-    combo = dodgeStreak;
-    comboCounter.textContent = `Combo: ${combo}x`;
-    comboCounter.style.display = 'block';
-    
-    if (combo >= 5 && soundToggle.checked) {
-      comboSound.currentTime = 0;
-      comboSound.play().catch(e => console.log('Audio play prevented:', e));
-    }
-    
-    // Add combo bonus to score
-    addScore(combo * 2);
-    
-    // Visual effect for high combos
-    if (combo >= 5) {
-      const effect = document.createElement('div');
-      effect.className = 'combo-effect';
-      gameContainer.appendChild(effect);
-      setTimeout(() => effect.remove(), 500);
-    }
-  } else {
-    comboCounter.style.display = 'none';
-  }
 }
 
 // Game mechanics
@@ -479,7 +472,8 @@ function moveEnemies() {
     if (newTop > 600) {
       enemy.remove();
       enemies.splice(index, 1);
-      updateCombo(); // Count as a successful dodge
+      addScore(1); // +1 point par voiture évitée
+      updateCombo(); // Comptabilise le dodge pour le combo
     }
   });
 }
@@ -551,7 +545,7 @@ function handleCollision(enemy, index) {
     // Destroy enemy without penalty
     enemy.remove();
     enemies.splice(index, 1);
-    addScore(5);
+    addScore(2);
     return;
   }
   
