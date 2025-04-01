@@ -5,25 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Ride</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Zone d'attente avant de commencer le jeu -->
   <div id="start-screen">
+    <h1 id="game-title">Happy Ride</h1>
+    <div id="high-score-container">
+      <p>Meilleur score: <span id="high-score">0</span></p>
+    </div>
     <button id="start-btn">Démarrer le jeu</button>
+    <div class="settings-toggle" id="settings-btn">⚙️</div>
+    
+    <div id="settings-panel">
+      <h3>Paramètres</h3>
+      <div class="setting">
+        <label for="sound-toggle">Son:</label>
+        <input type="checkbox" id="sound-toggle" checked>
+      </div>
+      <div class="setting">
+        <label for="music-toggle">Musique:</label>
+        <input type="checkbox" id="music-toggle" checked>
+      </div>
+      <div class="setting">
+        <label for="difficulty">Difficulté:</label>
+        <select id="difficulty">
+          <option value="easy">Facile</option>
+          <option value="medium" selected>Moyen</option>
+          <option value="hard">Difficile</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <!-- Zone du jeu, cachée initialement -->
   <div id="game-container" style="display: none;">
     <div id="road">
-      <img src="https://i.postimg.cc/phNSDpKc/road-png-9578.png" alt="Road" id="road-image">
+      <div class="background-layer" id="bg-layer-1"></div>
+      <div class="background-layer" id="bg-layer-2"></div>
       <div class="player-car">
-        <img src="https://i.postimg.cc/w1jYvykh/car.png" alt="Player Car">
+        <!-- SVG will be added by JS -->
       </div>
-      <div class="enemy-car">
-        <img src="https://i.postimg.cc/BjVknhb0/vecteezy-car-cartoon-porsche-3d-render-png-20000361.png" alt="Enemy Car">
-      </div>
+      <!-- Enemy cars will be added by JS -->
     </div>
-    <div id="current-score">Score : 0</div>
+    <div id="hud">
+      <div id="current-score">Score : 0</div>
+      <div id="combo-counter">Combo: 0x</div>
+      <div id="level-indicator">Niveau: 1</div>
+      <div id="lives-display">Vies: ❤️❤️❤️</div>
+      <div id="power-up-timer"></div>
+    </div>
+  </div>
+
+  <!-- Mobile controls -->
+  <div id="mobile-controls">
+    <div class="control-btn" id="left-btn">◀</div>
+    <div class="control-btn" id="right-btn">▶</div>
   </div>
 
   <!-- Section des boutons -->
@@ -34,19 +71,30 @@
 
   <!-- Popup Game Over -->
   <div id="game-over-popup">
-    <p>Game Over! Score final : <span id="final-score">0</span></p>
+    <h2>Game Over!</h2>
+    <p>Score final : <span id="final-score">0</span></p>
+    <p>Niveau atteint : <span id="final-level">1</span></p>
+    <p>Nouveau record! <span id="new-high-score">🎉</span></p>
     <button id="restart-btn">Recommencer</button>
   </div>
 
   <!-- Audio -->
   <audio id="background-music" loop>
-    <source src="C:\Users\ELITEBOOK\Desktop\Happy Ride\titanium-170190.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     Votre navigateur ne supporte pas la balise audio.
   </audio>
 
   <audio id="collision-sound">
-    <source src="" type="audio/mpeg">
+    <source src="https://www.soundjay.com/mechanical/sounds/car-crash-1.mp3" type="audio/mpeg">
     Votre navigateur ne supporte pas la balise audio.
+  </audio>
+
+  <audio id="power-up-sound">
+    <source src="https://www.soundjay.com/buttons/sounds/button-09.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="combo-sound">
+    <source src="https://www.soundjay.com/buttons/sounds/button-10.mp3" type="audio/mpeg">
   </audio>
 
   <script src="script.js"></script>
